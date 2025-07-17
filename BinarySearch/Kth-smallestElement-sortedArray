@@ -1,0 +1,65 @@
+/*
+
+TC = O(KLOGN), SC = N
+
+class Solution {
+public:
+    int kthSmallest(vector<vector<int>>& matrix, int k) {
+        int n = matrix.size();
+        priority_queue<tuple<int,int,int>, vector<tuple<int,int,int>>,greater<>> minHeap;
+
+        //push first element of each row in tuple
+        for(int i = 0; i < n; i++){
+            minHeap.emplace(matrix[i][0], i, 0);
+        }
+
+        int val = 0;
+        while(k > 0){
+            auto [v,r,c] = minHeap.top();
+            minHeap.pop();
+            val = v;
+
+            //push next element of same row
+            if(c + 1 < n){
+                minHeap.push({matrix[r][c+1], r, c+1});
+            }
+            k--;
+        }
+        return val;
+    }
+};
+
+--------------------------------Optimised solution-------------------------------------------------
+
+TC = O(NLOG(max - min)), SC = O(1)
+class Solution {
+private:
+    int countelements(vector<vector<int>>& matrix, int mid, int n){
+        int i = n-1 , j = 0;
+        int cnt = 0;
+        while(i >= 0 && j < n){
+            if(matrix[i][j] <= mid){
+                cnt += i + 1;
+                j++;
+            }
+            else{
+                i--;
+            }
+        }
+        return cnt;
+    }
+public:
+    int kthSmallest(vector<vector<int>>& matrix, int k) {
+        int n = matrix.size();
+        int low = matrix[0][0], high = matrix[n-1][n-1];
+        while(low < high){
+            int mid = low + (high - low)/ 2;
+            int cnt = countelements(matrix, mid, n);
+            if(cnt < k) low = mid + 1;
+            else high = mid;
+        }
+        return low;
+    }
+};
+
+*/
