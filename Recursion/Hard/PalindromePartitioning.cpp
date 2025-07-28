@@ -26,3 +26,5 @@ bool isPalindrome(string s, int start, int end){
     }
     return true;
 }
+
+TC = O(2 ^ N), SC = O(N)
