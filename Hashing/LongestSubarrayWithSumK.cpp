@@ -1,65 +1,57 @@
-    int longestConsecutive(vector<int>& nums) {
+    int longestSubarray(vector<int> &nums, int k){
         int n = nums.size();
-        if(n == 0) return 0;
-        int ans = 1;
+        int len = 0;
         for(int i = 0; i < n; i++){
-            int x = nums[i];
-            int cnt = 1;
-            while(linearsearch(nums, x + 1)){
-                x = x + 1;
-                cnt++;
+            for(int j = i; j < n; j++){
+                int sum = 0;
+                for(int k = i; k <= j; k++){
+                    sum += nums[k];
+                }
+                if(sum == k) len = max(len, j - i + 1);
             }
-            ans = max(ans, cnt);
         }
-        return ans;
+        return len;
     }
-    bool linearsearch(vector<int>& nums, int num){
-        for(int i = 0; i < nums.size(); i++){
-            if(nums[i] == num) return true;
+    TC = O(N ^ 3), SC = O(1)
+-------------------------------------------------------------------------
+    int longestSubarray(vector<int> &nums, int k){
+        int n = nums.size();
+        int maxlen = 0;
+        for(int i = 0; i < n; i++){
+            int sum = 0;
+            int len = 0;
+            for(int j = i; j < n; j++){
+                sum += nums[j];
+                if(sum == k){
+                    len = j - i + 1;
+                    maxlen = max(maxlen, len);
+                }
+            }
         }
-        return false;
+        return maxlen;
     }
     TC = O(N^2), SC = O(1)
----------------------------------------------------------------------
-    int longestConsecutive(vector<int>& nums) {
-        if(nums.size() == 0) return 0;
-        sort(nums.begin(), nums.end());
-        int lastsmaller = INT_MIN;
-        int cnt = 0, ans = 1;
-        for(int i = 0; i < nums.size(); i++){
-            if(nums[i] - 1 == lastsmaller){
-                cnt++;
-                lastsmaller = nums[i];
-            }
-            else if(nums[i] != lastsmaller){
-                cnt = 1;
-                lastsmaller = nums[i];
-            }
-            ans = max(ans, cnt);
-        }
-        return ans;
-
-    }
-    TC = O(NLOGN + N), SC = O(1)
------------------------------------------------------------------
-    int longestConsecutive(vector<int>& nums) {
+-------------------------------------------------------------------------------
+    int longestSubarray(vector<int> &nums, int k){
+        map<int,int> prefixSum;
         int n = nums.size();
-        if( n == 0) return 0;
-        int ans = 1;
-        unordered_set<int> st;
-        for(int num : nums) st.insert(num);
-
-        for(auto it : st){
-            if(st.find(it - 1) == st.end()){
-                int cnt = 1;
-                int x = it;
-                while(st.find(x + 1) != st.end()){
-                    x = x + 1;
-                    cnt++;
-                }
-                ans = max(ans, cnt);
+        int sum = 0, maxlen = 0;
+        for(int i = 0; i < n; i++){
+            sum += nums[i];
+            if(sum == k){
+                maxlen = max(maxlen, i+1);
+            }
+            int rem = sum - k;
+            if(prefixSum.find(rem) != prefixSum.end()){
+                int len = i - prefixSum[rem];
+                maxlen = max(maxlen, len);
+            }
+            //we need longest so here if sum already not present then we add it into map
+            //if it is already present and we update it then we get smallest subarr
+            if(prefixSum.find(sum) == prefixSum.end()){
+                prefixSum[sum] = i;
             }
         }
-        return ans;
+        return maxlen;
     }
-    TC = O(3 * N), SC = O(N)
+    TC = O(N * LOGN) as we use ordered map, SC = O(N)
