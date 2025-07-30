@@ -40,4 +40,20 @@
         }
         return true;
     }
+
+    Or we can also write check rules as
+    bool rulesMet(vector<vector<char>>& board, int row, int col, char digit){
+        for(int i = 0; i < 9 ; i++){
+            if(board[row][i] == digit || board[i][col] == digit){
+                //digit already in row or col
+                return false;
+            }
+            int startRow = (row / 3) * 3;
+            int startCol = (col / 3) * 3;
+            if(board[startRow + i / 3][startCol + i % 3] == digit) return false;
+        }
+        
+        return true;
+    }
+    
     TC = O(9 ^ EMPTY CELL), SC = O(EMPTY CELL)

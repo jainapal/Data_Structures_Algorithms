@@ -1,4 +1,4 @@
-/*
+
 TC = O(NLOGN), SC = O(1)
 
 class Solution {
@@ -44,6 +44,3 @@ public:
     }
 };
 
-
-
-*/
