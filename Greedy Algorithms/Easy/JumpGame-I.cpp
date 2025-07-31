@@ -66,7 +66,8 @@ Q what if we want to return indices of path taken?
         path.push_back(curr);
         curr = parent[curr];
     }
-
+    
+    path.push_back(0);
     reverse(path.begin(), path.end());
     return path;
 }
