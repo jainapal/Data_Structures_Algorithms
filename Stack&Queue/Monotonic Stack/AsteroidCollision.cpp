@@ -19,4 +19,4 @@ vector<int> asteroidCollision(vector<int> &asteroids){
       }
       return st;
     }
-    TC = O(N), SC = O(N)
+    TC = O(2N), SC = O(N)
