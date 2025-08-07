@@ -21,7 +21,7 @@ private:
       stack<int> st;
       for(int i = n - 1; i >= 0; i--){
         int curr = nums[i];
-        while(!st.empty() && nums[st.top() >= curr]){
+        while(!st.empty() && nums[st.top()] >= curr){
           st.pop();
         }
         ans[i] = st.empty() ? n : st.top();
