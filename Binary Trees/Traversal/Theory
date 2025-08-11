@@ -1,0 +1,63 @@
+INTRODUCTION TO TREES
+In the world of data structures and algorithms, understanding binary trees lays the groundwork for hierarchical organisation and efficient data manipulation.
+
+Up until now, we have studied array, linked list, stack, and queues which are the fundamental linear data structures. Binary Trees are a different data structure and allow hierarchical organisation and structure of multi-level sequences. This resembles a tree with branching at each node expanding the tree in a non-linear fashion.
+Binary Tree: A fundamental hierarchical data structure in computer science that comprises nodes arranged in a tree-like structure. It consists of nodes, where each node can have at most two children nodes, known as the left child and the right child.
+Nodes: Each node in a binary tree contains a piece of data, often referred to as the node’s value or key. This node also contains references and pointers to its left and right children so that we can traverse from one node to another in a hierarchical order.
+Root Node: The topmost node of a binary tree from which all other nodes stem out. This serves as the entry point for traversing the tree structure.
+Children Nodes: Nodes directly connected to a parent node. In a binary tree, a parent node can have zero, one, or two children nodes, each situated to the left or right of the parent node.
+Leaf Nodes: Nodes that do not have any children. These nodes lie on the outermost ends of the tree branches and are the terminal points of the traversal.
+Ancestors: Nodes that lie on the path from a particular node to the root node. They are the nodes encountered while moving upwards from a specific node through its parent nodes until reaching the root of the tree.
+
+Full Binary Tree: Also known as a Strict Binary Tree, where every node has either zero or two children. No node of this tree has just a single child; all internal nodes have exactly two children or no children if they are leaf nodes.
+The property that each node has either 2 or 0 children contributes significantly to the tree’s balance, making traversal, searching, and insertion options more predictable and efficient. The emphasis on having exactly two children optimises space utilisation and makes the tree more balanced.
+
+Complete Binary Tree: A specialised form of Binary Tree where all levels are filled completely except possibly the last level, which is filled from left to right. All levels of the tree, except possibly the last one, are fully filled. If the last level is not completely filled, it is filled from left to right, ensuring that nodes are positioned as far left as possible.
+In a complete binary tree, all leaf nodes are in the last level or the second-to-last level, and they are positioned towards the leftmost side.
+This structure is particularly useful for storing data in structures like heaps, where efficient access to the top element (root) or certain properties (e.g., maximum or minimum values in a heap) is crucial. The completeness property aids in achieving balanced structures, making it easier to implement algorithms and ensuring reasonably consistent performance.
+Although it might seem similar to a full binary tree, a complete binary tree doesn't require all nodes to have two children; it's about the positioning and arrangement of nodes.
+
+Perfect Binary Tree: A type of Binary Tree where all leaf nodes are at the same level and the number of leaf nodes is maximised for that level. Every node in a perfect binary tree has either zero or two children. This means that every internal node (non-leaf node) has exactly two children and all leaf nodes are at the same level.
+All levels of this tree are fully filled with nodes including the last level. Perfect Binary Trees have a balanced structure that maximises the number of nodes for a given height, creating a dense structure where the number of nodes doubles as we move down each level of the tree.
+Properties of perfect binary trees make them efficient for certain operations like searching and sorting due to their balanced nature. However, achieving and maintaining perfect balance, especially when the number of nodes is not a power of two, might not be feasible in many practical applications.
+
+Balanced Binary Tree: A type of Binary Tree where the heights of the two subtrees of any node differ by at most one. This property ensures that the tree remains relatively well-balanced, preventing the tree from becoming highly skewed or degenerate.
+In a balanced binary tree, the height of the tree should be log2N at maximum, where N is the number of nodes. This ensures that the tree does not become heavily skewed or imbalanced. The distribution of nodes of both the left and right subtrees remains relatively even throughout the tree.
+
+Degenerate Tree: A Binary Tree where the nodes are arranged in a single path leaning to the right or left. The tree resembles a linked list in its structure where each node points to the next node in a linear fashion.
+Each level of this tree only has one node. The height of the tree reaches ‘n’, i.e., the number of nodes in the tree, resulting in inefficient search operations. Though degenerate trees are not commonly used intentionally due to their inefficient nature for most operations, they may occur inadvertently in scenarios where nodes are inserted in a specific order (e.g., always to the right or left), causing the tree to lose its balanced properties.
+Understanding degenerate trees is essential in analysing the worst-case time complexity of algorithms in scenarios where the tree structure degrades to this linear form, as it can help in optimising algorithms for these situations.
+
+REPRESENTATION OF BINARY TREES
+
+In C++, a binary tree is represented using pointers, forming a hierarchical structure where each node can point to two further nodes: a left child and a right child. This representation uses pointers to establish connections between nodes in the tree, allowing traversal and navigation throughout the structure.
+
+Node Structure: A binary tree node is represented using a struct or class that contains the following components:
+
+Data Component: Holds the value of the node, which could be of any data type (e.g., integer, string, object).
+Pointers to Children: Two pointers, left and right, pointing to the left and right child nodes, respectively. These pointers store the memory addresses of the child nodes, allowing navigation and access to further nodes in the tree.
+Node Constructor: The constructor function is named Node, which is the same as the structure name. It takes an integer val as a parameter, which represents the value to be stored in the node.
+
+data = val; : Assigns the value passed as a parameter (val) to the data member of the node. This sets the value of the node to the input integer.
+left = right = NULL; : Initialises both the left and right pointers to NULL. This is done to ensure that initially, the node does not have any left or right children. Setting pointers to NULL indicates that there are no connections to other nodes at the time of node creation.
+Node Connection: When constructing a binary tree using pointers, each node stores references (memory addresses) to its left and right children. These references form the connections between nodes, enabling the hierarchical structure.
+
+When creating a new node, memory is allocated, and the node's data is stored. Pointers left and right are initialised as nullptr (in C++) or NULL to signify that the node currently has no children. Later, nodes are connected by assigning the left and right pointers of a parent node to the memory addresses of its respective left and right child nodes.
+
+struct Node {
+    int data;        
+    Node* left;      
+    Node* right;      
+
+    Node(int val) {
+        data = val;   
+        left = right = NULL;  
+    }
+};
+//creating a binary tree
+int main() { 
+    Node* root = new Node(1);
+    root->left = new Node(2);
+    root->right = new Node(3);
+    root->left->left = new Node(4);
+}
