@@ -47,3 +47,41 @@ void find(TreeNode* root, int& l, int& r, int pos){
 
     TC = O(N) + O(N) as we are traversing n elements in 2d grid and for find func also traversing n elements
     SC = O(N) + O(N) as 2d vector in total storing n elements and ques also storing n elements
+-------------------------------------------------------------------------------------------------------------------------
+
+vector<vector<int>> verticalTraversal(TreeNode* root) {
+    	vector<vector<int>> ans;
+        if(!root) return ans;
+        //map to store nodes at each vertical distance and level
+        map<int, map<int, priority_queue<int,vector<int>,greater<int>>>> nodesMap;
+        //queue for traversal, nodes along with vertical , level
+        queue<pair<TreeNode*, pair<int, int>>> q;
+        q.push({root, {0, 0}});
+
+        while(!q.empty()){
+            auto p = q.front();
+            q.pop();
+            TreeNode* temp = p.first;
+            int pos = p.second.first;
+            int level = p.second.second;
+
+            nodesMap[pos][level].push(temp->data);
+
+            if(temp->left) q.push({temp->left, {pos -1, level + 1}});
+            if(temp->right) q.push({temp->right, {pos+1, level + 1}});
+        }
+        for(auto& p : nodesMap){
+            vector<int> col;
+            for(auto& q : p.second){
+                while(!q.second.empty()){
+                    col.push_back(q.second.top());
+                    q.second.pop();
+                }
+            }
+            ans.push_back(col);
+        }
+        return ans;
+    }
+    
+    TC = O(N * LOG(2N) * LOG(2N) * LOG(2N))
+    SC = O(N) + O(N/2) //MAP + QUEUE
