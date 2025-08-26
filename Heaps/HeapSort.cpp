@@ -31,3 +31,21 @@ public:
     }
 };
 TC = O(NLOG(N)), SC = O(LOGN)
+
+Using iterative approach for heapifydown
+void heapifyDown(vector<int>& arr, int ind, int last) {
+        while(true) {
+            int largest = ind;
+            int left = 2 * ind + 1;
+            int right = 2 * ind + 2;
+
+            if(left <= last && arr[left] > arr[largest]) largest = left;
+            if(right <= last && arr[right] > arr[largest]) largest = right;
+
+            if(largest == ind) break;  // heap property satisfied
+
+            swap(arr[ind], arr[largest]);
+            ind = largest;             // continue downward
+        }
+    }
+    SC = O(1)
